@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { emailService } from '@/services/email.service';
-import type { Email } from '@/types/email';
 import { Button } from '@/components/ui/button';
 import {
   Star,

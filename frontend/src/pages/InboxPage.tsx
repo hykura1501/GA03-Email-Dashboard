@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { logout, setUser } from '@/store/authSlice';
+import { useAppDispatch } from '@/store/hooks';
+import {  setUser } from '@/store/authSlice';
 import { authService } from '@/services/auth.service';
 import type { Email } from '@/types/email';
 import MailboxList from '@/components/inbox/MailboxList';
@@ -10,13 +10,13 @@ import EmailDetail from '@/components/inbox/EmailDetail';
 import ComposeEmail from '@/components/inbox/ComposeEmail';
 import { Button } from '@/components/ui/button';
 import { Bell, Settings, User, Menu } from 'lucide-react';
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import {  useQueryClient, useQuery } from '@tanstack/react-query';
 
 export default function InboxPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
-  const user = useAppSelector((state) => state.auth.user);
+  // const user = useAppSelector((state) => state.auth.user);
   const { mailbox, emailId } = useParams<{ mailbox?: string; emailId?: string }>();
   
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -42,18 +42,18 @@ export default function InboxPage() {
     }
   }, [meData, dispatch]);
 
-  const logoutMutation = useMutation({
-    mutationFn: authService.logout,
-    onSuccess: () => {
-      dispatch(logout());
-      queryClient.clear();
-      navigate('/login');
-    },
-  });
+  // const logoutMutation = useMutation({
+  //   mutationFn: authService.logout,
+  //   onSuccess: () => {
+  //     dispatch(logout());
+  //     queryClient.clear();
+  //     navigate('/login');
+  //   },
+  // });
 
-  const handleLogout = () => {
-    logoutMutation.mutate();
-  };
+  // const handleLogout = () => {
+  //   logoutMutation.mutate();
+  // };
 
   const handleSelectMailbox = (id: string) => {
     navigate(`/${id}`);
@@ -65,7 +65,7 @@ export default function InboxPage() {
     setMobileView('detail');
   };
 
-  const handleToggleStar = (emailId: string) => {
+  const handleToggleStar = () => {
     queryClient.invalidateQueries({ queryKey: ['emails'] });
   };
 
